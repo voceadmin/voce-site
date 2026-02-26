@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vocè — Finally, the right words.</title>
+  <meta name="description" content="Vocè is your AI-powered communication advisor. Screenshot a text, get strategic advice, respond with confidence. For every relationship in your life.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0F172A;
+      --surface: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+      --text: #FFFFFF;
+      --text-sec: rgba(255,255,255,0.55);
+      --text-ter: rgba(255,255,255,0.35);
+      --brand: #4A3AC8;
+      --brand-light: #6750DD;
+      --brand-deep: #3D30BD;
+      --success: #10B981;
+      --sky: #0EA5E9;
+      --orange: #F97316;
+    }
+
+    body {
+      font-family: 'Sora', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--brand-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 16px 32px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 20px; font-weight: 700;
+      background: linear-gradient(135deg, var(--brand-deep), var(--brand-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a { color: var(--text-sec); font-size: 14px; font-weight: 500; }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; text-align: center;
+      padding: 120px 24px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -40%; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 800px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(74,58,200,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 64px); font-weight: 800;
+      line-height: 1.1; margin-bottom: 20px; max-width: 700px;
+      position: relative;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--brand-light), var(--sky));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: clamp(16px, 2vw, 20px); color: var(--text-sec);
+      max-width: 520px; margin-bottom: 36px; position: relative;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 32px; border-radius: 12px; font-size: 16px; font-weight: 600;
+      background: linear-gradient(135deg, var(--brand), var(--brand-light));
+      color: white; border: none; cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(74,58,200,0.4);
+      text-decoration: none;
+    }
+    .hero-sub {
+      margin-top: 12px; font-size: 13px; color: var(--text-ter);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* FEATURES */
+    .section { padding: 80px 24px; max-width: 960px; margin: 0 auto; }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 12px;
+      color: var(--brand-light); text-transform: uppercase;
+      letter-spacing: 2px; margin-bottom: 12px;
+    }
+    .section h2 { font-size: 32px; font-weight: 700; margin-bottom: 16px; }
+    .section > p { color: var(--text-sec); font-size: 16px; margin-bottom: 48px; max-width: 600px; }
+
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .feature-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+    }
+    .feature-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; margin-bottom: 16px;
+    }
+    .feature-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+    .feature-card p { font-size: 14px; color: var(--text-sec); line-height: 1.6; }
+
+    /* HOW IT WORKS */
+    .steps { display: flex; flex-direction: column; gap: 32px; }
+    .step {
+      display: flex; gap: 20px; align-items: flex-start;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+    }
+    .step-num {
+      font-family: 'JetBrains Mono', monospace; font-size: 14px;
+      font-weight: 700; color: var(--brand-light);
+      background: rgba(74,58,200,0.15); border-radius: 8px;
+      width: 36px; height: 36px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .step h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .step p { font-size: 14px; color: var(--text-sec); }
+
+    /* PRICING */
+    .pricing-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .pricing-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 32px; position: relative;
+    }
+    .pricing-card.featured {
+      border-color: var(--brand-light);
+      background: linear-gradient(180deg, rgba(74,58,200,0.08) 0%, var(--surface) 100%);
+    }
+    .pricing-badge {
+      position: absolute; top: -10px; right: 20px;
+      background: var(--brand-light); color: white;
+      font-size: 11px; font-weight: 700; padding: 4px 12px;
+      border-radius: 6px; text-transform: uppercase;
+    }
+    .pricing-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+    .pricing-price {
+      font-size: 36px; font-weight: 800; margin: 12px 0 4px;
+    }
+    .pricing-price span { font-size: 16px; font-weight: 400; color: var(--text-sec); }
+    .pricing-annual { font-size: 13px; color: var(--text-ter); margin-bottom: 20px; }
+    .pricing-features { list-style: none; }
+    .pricing-features li {
+      font-size: 14px; color: var(--text-sec); padding: 6px 0;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .pricing-features li::before { content: '✓'; color: var(--success); font-weight: 700; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border); padding: 48px 24px;
+      text-align: center;
+    }
+    .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 20px; flex-wrap: wrap; }
+    .footer-links a { color: var(--text-sec); font-size: 14px; }
+    .footer-copy { font-size: 13px; color: var(--text-ter); }
+
+    /* LEGAL PAGE STYLES */
+    .legal-page {
+      max-width: 720px; margin: 0 auto;
+      padding: 120px 24px 80px;
+    }
+    .legal-page h1 {
+      font-size: 28px; font-weight: 700; margin-bottom: 4px;
+    }
+    .legal-page .legal-meta {
+      font-size: 14px; color: var(--text-sec); margin-bottom: 40px;
+      padding-bottom: 20px; border-bottom: 1px solid var(--border);
+    }
+    .legal-page h2 {
+      font-size: 20px; font-weight: 700; margin: 36px 0 12px;
+    }
+    .legal-page h3 {
+      font-size: 16px; font-weight: 600; margin: 24px 0 8px;
+    }
+    .legal-page p {
+      font-size: 15px; color: var(--text-sec); margin-bottom: 14px; line-height: 1.7;
+    }
+    .legal-page strong { color: var(--text); }
+    .legal-page table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 14px;
+    }
+    .legal-page th, .legal-page td {
+      text-align: left; padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-sec);
+    }
+    .legal-page th { color: var(--text); font-weight: 600; }
+    .legal-page .callout {
+      background: var(--surface); border: 1px solid var(--border);
+      border-left: 3px solid var(--brand-light);
+      border-radius: 8px; padding: 16px 20px; margin: 16px 0;
+    }
+    .legal-page .callout p { margin-bottom: 0; }
+    .legal-page .caps-block {
+      font-size: 13px; color: var(--text-ter); line-height: 1.7;
+      margin: 14px 0;
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 12px 16px; }
+      .nav-links { gap: 16px; }
+      .pricing-cards { grid-template-columns: 1fr; }
+      .step { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">vocè</a>
+  <div class="nav-links">
+    <a href="/privacy">Privacy</a>
+    <a href="/terms">Terms</a>
+    <a href="/safety">Safety</a>
+  </div>
+</nav>
+
+<div id="page-home">
+
+  <section class="hero">
+    <h1>Finally, <em>the right words.</em></h1>
+    <p>Screenshot a text. Get strategic advice from AI. Respond with confidence. For every relationship in your life.</p>
+    <a href="#" class="hero-cta">Coming soon to iOS</a>
+    <p class="hero-sub">Free 7-day Pro trial · No credit card required</p>
+  </section>
+
+  <section class="section">
+    <div class="section-label">How It Works</div>
+    <h2>Three steps. Real results.</h2>
+    <p>Vocè gives you the analysis and the actual words to say — not generic tips.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div>
+          <h3>Share what happened</h3>
+          <p>Screenshot a conversation or describe a situation. Vocè handles texts, calls, in-person interactions — anything.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div>
+          <h3>Get the read</h3>
+          <p>Vocè analyzes the psychology — what they're really saying, the power dynamics at play, and what's likely to happen next.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div>
+          <h3>Choose your approach</h3>
+          <p>Three strategic options, each leading somewhere different. With the exact words to say, ready to copy and send.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Why Vocè</div>
+    <h2>Not just another AI chatbot.</h2>
+    <p>Vocè remembers your relationships, tracks what works, and gets smarter with every conversation.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(74,58,200,0.15)">🎯</div>
+        <h3>Every relationship</h3>
+        <p>Boss, ex, mom, date, landlord, coworker. Not just dating — every conversation that matters.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(14,165,233,0.15)">🧠</div>
+        <h3>Relationship memory</h3>
+        <p>After 5 conversations about your boss, Vocè knows exactly how to handle them.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(249,115,22,0.15)">📊</div>
+        <h3>Outcome tracking</h3>
+        <p>"How did it go?" Vocè learns what works and what doesn't — for you, specifically.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(16,185,129,0.15)">🛡️</div>
+        <h3>Safety first</h3>
+        <p>Vocè detects manipulation, abuse, and danger. Names toxic patterns directly. Crisis resources always accessible.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Pricing</div>
+    <h2>Start free. Upgrade when you're ready.</h2>
+    <p>Every new user gets a 7-day free Pro trial. No credit card required.</p>
+    <div class="pricing-cards">
+      <div class="pricing-card">
+        <h3>Free</h3>
+        <div class="pricing-price">$0</div>
+        <div class="pricing-annual">After your 7-day trial</div>
+        <ul class="pricing-features">
+          <li>3 analyses per day</li>
+          <li>Full situation read</li>
+          <li>1 copyable response option</li>
+          <li>Crisis resources always available</li>
+        </ul>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Best Value</div>
+        <h3>Vocè Pro</h3>
+        <div class="pricing-price">$9.99<span>/mo</span></div>
+        <div class="pricing-annual">or $79.99/year (save 33%)</div>
+        <ul class="pricing-features">
+          <li>Unlimited analyses</li>
+          <li>All 3 strategic response options</li>
+          <li>Full emotional decode</li>
+          <li>Relationship memory &amp; insights</li>
+          <li>Communication style profile</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/terms">Terms of Service</a>
+    <a href="/safety">Safety Protocol</a>
+    <a href="mailto:support@voce-app.com">Contact</a>
+  </div>
+  <p class="footer-copy">Vocè is powered by artificial intelligence. You are interacting with AI, not a human. Vocè is designed for users 18 and older.<br>&copy; 2026 Vocè. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
